@@ -9,10 +9,12 @@ mapStamen <- setRefClass("mapStamen",
                          ),
                          methods = list(
                            
-                           initialize = function(left = 86.05,
-                                                 bottom = 27.21,
-                                                 right = 87.81,
-                                                 top = 28.76){
+                           initialize = function(){
+                             
+                             myBox <- c(left = 86.05,
+                                        bottom = 27.21,
+                                        right = 87.81,
+                                        top = 28.76)
                              
                              Prompt <- readline("The default map illustrates
                              a crop of mountain Everest;Continue with that?[Y/N]: ")
