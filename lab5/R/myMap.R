@@ -1,10 +1,10 @@
-#' @import httr
-#' @import jsonlite
-#' @import ggmap
+ library(httr)
+ library(jsonlite)
+ library(ggmap)
 
 mapStamen <- setRefClass("mapStamen",
                          fields = list(
-                           myMap = "raster"
+                           myMap = "Raster"
                            
                          ),
                          methods = list(
