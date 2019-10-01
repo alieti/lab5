@@ -1,44 +1,42 @@
  library(httr)
  library(jsonlite)
  library(ggmap)
+ library(R6)
 
-mapStamen <- setRefClass("mapStamen",
-                         fields = list(
-                           myMap = "Raster"
+mapStamen <- R6Class("mapStamen",
+                         public = list(
+                           left = NA,
+                           bottom = NA,
+                           right = NA,
+                           top = NA,
+                           myMap = NA,
+                        
                            
-                         ),
-                         methods = list(
-                           
-                           initialize = function(){
+                           initialize = function(left, bottom, right, top){
                              
-                             myBox <- c(left = 86.05,
-                                        bottom = 27.21,
-                                        right = 87.81,
-                                        top = 28.76)
+                             if (!missing(left)) self$left <- left
+                             if (!missing(bottom)) self$bottom <- bottom
+                             if (!missing(right)) self$right <- right
+                             if (!missing(top)) self$top <- top
                              
-                             Prompt <- readline("The default map illustrates
-                             a crop of mountain Everest;Continue with that?[Y/N]: ")
-                             
-                             if(tolower(Prompt) == "n"){
-                               
-                               left <- as.numeric(readline("What is the value of lowerleft lon?"))  
-                               bottom <- as.numeric(readline("What is the value of lowerleft lat?"))
-                               right <- as.numeric(readline("What is the value of upperright lon?"))
-                               top <- as.numeric(readline("What is the value of upperright lat?"))
-                             }
-                             
-                             myBox <- c(left , bottom , right , top )
+                             if (missing(left)) {self$left <- as.numeric(readline("What is the value of lowerleft longitude?"))}
+                             if (missing(bottom)) {self$bottom <- as.numeric(readline("What is the value of lowerleft latitude?"))}
+                             if (missing(right)) {self$right <- as.numeric(readline("What is the value of upperright longitude?"))}
+                             if (missing(top)) {self$top <- as.numeric(readline("What is the value of upperright latitude?"))}
                              
                              
-                             myMap <<- get_stamenmap(bbox = myBox,
-                                           zoom = 10,
-                                           maptype = c("terrain-background"),
-                                           crop = TRUE)
+                            
+                             self$myMap <- get_stamenmap(c(self$left , self$bottom , self$right , self$top ),
+                                                         zoom = 10,
+                                                         maptype = c("terrain-background"),
+                                                         crop = TRUE)
                            },
+                           
+                           
                            
                            showMap = function(){
 
-                             ggmap(myMap)
+                             ggmap(self$myMap)
                            }
                          )
 )
