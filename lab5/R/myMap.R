@@ -48,7 +48,7 @@ MapStamen <- R6Class("MapStamen",
                        },
                        
                        saveMap = function(){
-                         self$showMap
+                         self$showMap()
                          ggsave(filename="myMap.png",
                                 width=6, height=6, units = "in")
                          
