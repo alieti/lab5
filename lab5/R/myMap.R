@@ -1,12 +1,11 @@
-library(httr)
-library(jsonlite)
 library(ggmap)
 library(R6)
 
 MapStamen <- R6Class("MapStamen",
                      public = list(
                        
-                       initialize = function(left, bottom, right, top){
+                       initialize = function(left = -125, bottom = 25.75, right = -67, top = 49,
+                                             mapType = "toner-lite", Zoom = 5){
                          
                          # if (missing(left)) {
                          #left <- as.numeric(readline("What is the value of lowerleft longitude?"))}
@@ -22,12 +21,15 @@ MapStamen <- R6Class("MapStamen",
                          stopifnot(is.numeric(bottom), length(bottom) == 1)
                          stopifnot(is.numeric(right), length(right) == 1)
                          stopifnot(is.numeric(top), length(top) == 1)
+                         stopifnot(is.numeric(Zoom), length(Zoom) == 1)
+                         stopifnot(is.character(mapType))
                          
                          private$.left <- left
                          private$.bottom <- bottom
                          private$.right <- right
                          private$.top <- top
-                         
+                         private$.mapType <- mapType
+                         private$.zoom <- Zoom
                          
                          private$getMap()
                          
@@ -35,7 +37,21 @@ MapStamen <- R6Class("MapStamen",
                        
                        showMap = function(){
                          
-                         ggmap(private$.myMap)
+                         longitude = c(private$.left, private$.right)
+                         latitude = c(private$.bottom, private$.top)
+                         sites = data.frame(Longitude = longitude, Latitude = latitude)
+                         
+                         ggmap(private$.myMap, legend = "right") +
+                           geom_point(data = sites, aes(x = Longitude, y = Latitude),
+                                      size = 2, shape=19)
+                         
+                       },
+                       
+                       saveMap = function(){
+                         self$showMap
+                         ggsave(filename="myMap.png",
+                                width=6, height=6, units = "in")
+                         
                        }
                      ),
                      
@@ -44,17 +60,21 @@ MapStamen <- R6Class("MapStamen",
                        .bottom = NA,
                        .right = NA,
                        .top = NA,
+                       .zoom = NA,
+                       .mapType = NA,
                        .myMap = NA,
                        
                        getMap = function(){
                          private$.myMap <- get_stamenmap(c(private$.left, private$.bottom,
                                                            private$.right , private$.top ),
-                                                         zoom = 10,
-                                                         maptype = c("terrain-background"),
-                                                         crop = TRUE)
+                                                         maptype = private$.mapType,
+                                                         crop = TRUE, zoom = private$.zoom)
                          
                          self
                        }
                        
                      )
 )
+
+
+
