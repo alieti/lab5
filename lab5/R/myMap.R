@@ -1,6 +1,10 @@
-library(ggmap)
-library(R6)
-
+#'
+#'
+#'@import R6
+#'@import ggmap
+#'@export
+#'
+#'
 MapStamen <- R6Class("MapStamen",
                      public = list(
                        
