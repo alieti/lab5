@@ -1,5 +1,5 @@
-#' @name lab5
-#' @title R Programming Lab5 Package
+#' @name myMap
+#' @title R Programming myMap Package
 #' @docType package
 #' @description A package which implements an R6 class costructor called "MapStamen".
 #'    This constructor returns an object as ggmap class which is a map extracted from

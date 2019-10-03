@@ -1,4 +1,4 @@
-Package: lab5
+Package: myMap
 Type: Package
 Title: Extract a map from mapStamen
 Version: 1.0
