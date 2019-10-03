@@ -35,7 +35,6 @@
 #'                                  
 #' @import R6
 #' @import ggmap
-#' @import ggplot2
 #' @export
 #'
 #'

@@ -11,5 +11,10 @@ License: GPL-3
 Encoding: UTF-8
 Imports: 
     R6,
-    ggmap
+    ggmap,
+    ggplot2
 RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

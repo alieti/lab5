@@ -1,0 +1,68 @@
+---
+title: "myMap"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{myMap}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(lab5)
+```
+
+<p> myMap is a package implementing an R6 class constructor to download a map from Stamen API:[http://maps.stamen.com].</p>
+<p> The constructor consists of 3 public methods and a private method. initialize method starts the function as it is called with the appropriate arguments.
+## Call
+<p> A new object will be generated as the constructor ic called:</p>
+```{r}
+myMap = MapStamen$new(left = 86.05, bottom = 27.21,
+                      right = 87.81, top = 28.76,
+                      mapType = "terrain-background", Zoom = 8)
+```
+
+<p> This call generates a new object named "myMap" which is actually a map extracted from Stamen API.</p>
+## Arguments
+<p> A map which is going to be extracted from Stamen should be defined by a box. The lower-left and upper-rigt points coordinates of the box should therefor be passed as the arguments.</p>
+* left: Provides the lower-left longtitude of the box.
+* bottom: Provides the lower-left latitude of the box.
+* right: Provides the upper-right longitude.
+* top: Provides the upper-right latitude.
+
+* <p>mapType: Provides the type of interest for map to be extracted out. It can be one of the following: "terrain", "terrain-background", "terrain-labels", "terrain-lines", "toner", "toner-2010", "toner-2011", "toner-background", "toner-hybrid",  "toner-labels", "toner-lines", "toner-lite", "watercolor" .</p>
+<p> Each of these types will show a special characteristic of the area of interest. For the details see:[http://maps.stamen.com] </p>
+
+* Zoom: Provides the zoom level.
+
+## Methods
+### showMap
+This method will show the myMap:
+```{r}
+myMap$showMap()
+```
+<p>This is the map of the area of interest for the mapType = "terrain-background".</p>
+
+<p> If we set mapType = "terrain":</p>
+
+```{r}
+myMap = MapStamen$new(left = 86.05, bottom = 27.21,
+                      right = 87.81, top = 28.76,
+                      mapType = "terrain", Zoom = 8)
+
+myMap$showMap()
+```
+
+
+### saveMap
+This method will save a png file of myMap in the working directory.
+```{r}
+myMap$saveMap()
+```
+
