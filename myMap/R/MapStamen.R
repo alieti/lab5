@@ -44,7 +44,7 @@ MapStamen <- R6Class("MapStamen",
                        #' @param mapType A string indicating the type of map("terrain", "toner",...)
                        #' @param Zoom zoom level 
                        
-                       initialize = function(left = -115.60, bottom = 32.71, right = -124.30, top = 41.80,
+                       initialize = function(left = -125, bottom = 25.75, right = -67, top = 49,
                                              mapType = "toner-lite", Zoom = 5){
                          
                          #Returning error and stop executing as the arguments are not the correct type.
@@ -94,68 +94,70 @@ MapStamen <- R6Class("MapStamen",
                        },
                        
                        #Method to plot AQI data on top of the map
-                       bubble = function() {
+                       ClGoodday = function() {
+                         
+                         #Plots good days with green bubbles
+                         ggmap(private$.myMap) +
+                           geom_point(aes(x = longi, y = latit,  colour = GoodDays), data = private$clData(), size = 2) + 
+                           theme(legend.position="bottom")
+                         
+                       },
+                       
+                       ClModday = function(){
+                         ggmap(private$.myMap) +
+                           geom_point(aes(x = longi, y = latit,  colour = ModerateDays), data = private$clData(), size = 2) + 
+                           theme(legend.position="bottom")
+                         
+                         
+                       },
+                       
+                       ClUnhealthDay = function(){
+                         ggmap(private$.myMap) +
+                           geom_point(aes(x = longi, y = latit,  colour = UnhealthyDays), data = private$clData(), size = 2) + 
+                           theme(legend.position="bottom")
+                       }
+                     ),
+                     
+                     
+                     private = list(
+                       .left = NA,
+                       .bottom = NA,
+                       .right = NA,
+                       .top = NA,
+                       .zoom = NA,
+                       .mapType = NA,
+                       .myMap = NA,
+                       # Get method to download the map from mapStamen API.
+                       getMap = function(){
+                         private$.myMap <- get_stamenmap(c(private$.left, private$.bottom,
+                                                           private$.right , private$.top ),
+                                                         maptype = private$.mapType,
+                                                         crop = TRUE, zoom = private$.zoom)
+                         
+                         self
+                       },
+                       
+                       clData = function(){
                          data5 <- read.csv2("aqi2019.csv", sep = ",")
-
-
+                         
+                         
                          gooddays <- as.numeric(data5$Good)
                          moderatedays <- as.numeric(data5$Moderate)
-                         unhealthy <- data.frame("Somewhat Unhealthy" = data5$Unhealthy.for.Sensitive.Groups,
-                                                 "Unhealthy" = data5$Unhealthy,
-                                                 "Very Unhealthy" = data5$Very.Unhealthy,
+                         unhealthy <- data.frame(SomewhatUnhealthy = data5$Unhealthy.for.Sensitive.Groups,
+                                                 Unhealthy = data5$Unhealthy,
+                                                 VeryUnhealthy = data5$Very.Unhealthy,
                                                  stringsAsFactors = FALSE)
+                         
                          unhealthy <- sapply(unhealthy, as.numeric)
                          nothealthy <- rowSums(unhealthy)
-                         latit <- data5$latitude
-                         longi <- data5$longitude
-                          
-                         goodplot <- data.frame(longi = longi, latit = latit, gooddays = gooddays, moderatedays = moderatedays, nothealthy = nothealthy)
-
-                         #Plots HEALTHY days with green bubbles
-                        ggmap(private$.myMap) + ggplot(data = goodplot, mapping =  aes(x = longi, y = latit, size = gooddays)) +
-                           geom_point(color = "Black", shape = 21, fill = "Green", stroke = 2, alpha = 0.5)+
-                           xlab("Longitude")+ ylab("Latitude") +
-                           ggtitle("Number of good days in California counties - 2019")+
-                           scale_size(range = c(5,30))
-
-                         #Plots MODERATE days with orange bubbles
-                         # plot2 = ggplot(data = goodplot, mapping =  aes(x = longi, y = latit , size = moderatedays)) +
-                         #   geom_point(color = "Black", shape = 21, fill = "Orange", stroke = 2, alpha = 0.5)+
-                         #   xlab("Longitude")+ ylab("Latitude") +
-                         #   ggtitle("Number of moderate days in California counties - 2019")+
-                         #   scale_size(range = c(5,30))
-                         # 
-                         # 
-                         # #Plots UNHEALTHY days with red bubbles
-                         # plot3 = ggplot(data = goodplot, mapping =  aes(x = longi, y = latit, size = nothealthy)) +
-                         #   geom_point(color = "Black", shape = 21, fill = "Red", stroke = 2, alpha = 0.5)+
-                         #   xlab("Longitude")+ ylab("Latitude") +
-                         #   ggtitle("Number of unhealthy days in California counties - 2019")+
-                         #   scale_size(range = c(5,30))
+                         latit <- as.numeric(format((data5$latitude)))
+                         longi <-  -1*as.numeric(format((data5$longitude)))
                          
-                       }),
-                       
-                       private = list(
-                         .left = NA,
-                         .bottom = NA,
-                         .right = NA,
-                         .top = NA,
-                         .zoom = NA,
-                         .mapType = NA,
-                         .myMap = NA,
-                         # Get method to download the map from mapStamen API.
-                         getMap = function(){
-                           private$.myMap <- get_stamenmap(c(private$.left, private$.bottom,
-                                                             private$.right , private$.top ),
-                                                           maptype = private$.mapType,
-                                                           crop = TRUE, zoom = private$.zoom)
-                           
-                           self
-                         }
-                         
-                       )
+                         goodplot <- data.frame(longi = longi, latit = latit,
+                                                GoodDays = gooddays,
+                                                ModerateDays = moderatedays,
+                                                UnhealthyDays = nothealthy)
+                         return(goodplot)
+                       }
                      )
-                     
-                     
-                     
-                     
+)
