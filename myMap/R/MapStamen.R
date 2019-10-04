@@ -141,7 +141,7 @@ MapStamen <- R6Class("MapStamen",
                            private$.myMap <- get_stamenmap(c(private$.left, private$.bottom,
                                                              private$.right , private$.top ),
                                                            maptype = private$.mapType,
-                                                           crop = FALSE, zoom = private$.zoom)
+                                                           crop = TRUE, zoom = private$.zoom)
                            
                            self
                          }
