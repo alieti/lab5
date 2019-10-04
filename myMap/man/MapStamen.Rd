@@ -35,19 +35,30 @@ MapStamen generates an object as R6 class. The returnd object is a map
    area of interest. Type of map and the requiered zoom can
     also be specified as the arguments.#'
 }
-\section{Methods}{
+\section{Public Methods}{
 
  \describe{
    \item{\code{initializ(left, bottom, right, top =, mapType, Zoom)}}{This method will be initialized the class generator as the costructor is called. A new object will be generated.}
    \item{\code{showMap()}}{This method displays the downloaded map.}
-   \item{\code{saveMap()}}{This method saves a png file in the working directory.}      
+   \item{\code{saveMap()}}{This method saves a png file in the working directory.}
+   \item{\code{ClGoodday()}}{This method display the No. of healthy days in California in 2019.}
+   \item{\code{ClModday()}}{This method display the No. of moderate days in California in 2019.}
+   \item{\code{ClUnhealthyDay()}}{This method display the No. of unhealthy days in California in 2019.}      
      }
+}
+
+\section{Private Methods}{
+
+ \describe{
+   \item{\code{getMap()}}{This method dowloads the map from Stamen API and will be implemented in initialize method.}
+   \item{\code{clData()}}{This method manipulates the dataset to be implemented in California healthy days methods.}   
+   }
 }
 
 \examples{
 myMap = MapStamen$new(left = 86.05, bottom = 27.21,
-                                right = 87.81, top = 28.76, mapType = "toner-lite", Zoom = 5 )
-                                 
+                               right = 87.81, top = 28.76, mapType = "toner-lite", Zoom = 5 )
+                                   
 }
 \seealso{
 http://maps.stamen.com

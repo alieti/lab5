@@ -23,9 +23,9 @@ library(myMap)
 ## Call
 <p> A new object will be generated as the constructor ic called:</p>
 ```{r}
-myMap = MapStamen$new(left = 86.05, bottom = 27.21,
-                      right = 87.81, top = 28.76,
-                      mapType = "terrain-background", Zoom = 8)
+myMap = MapStamen$new(left = -125, bottom = 25.75,
+                      right = -67, top = 49,
+                      mapType = "toner-lite", Zoom = 8)
 ```
 
 <p> This call generates a new object named "myMap" which is actually a map extracted from Stamen API.</p>
@@ -42,7 +42,8 @@ myMap = MapStamen$new(left = 86.05, bottom = 27.21,
 * Zoom: Provides the zoom level.
 
 ## Methods
-### showMap
+
+### showMap()
 This method will show the myMap:
 ```{r}
 myMap$showMap()
@@ -60,9 +61,27 @@ myMap$showMap()
 ```
 
 
-### saveMap
-This method will save a png file of myMap in the working directory.
+### saveMap()
+This method will save a png file of myMap in the working directory:
 ```{r}
 myMap$saveMap()
+```
+
+### ClGoodday()
+This method display the No. of healthy days in California in 2019:
+```{r}
+myMap$ClGoodday()
+```
+
+### ClModday()
+This method display the No. of moderate days in California in 2019:
+```{r}
+myMap$ClModday()
+```
+
+### ClUnhealthyDay()
+This method display the No. of unhealthy days in California in 2019:
+```{r}
+myMap$ClUnhealthyDay()
 ```
 
