@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(myMap)
+
 ```
 
 <p> myMap is a package implementing an R6 class constructor to download a map from Stamen API:[http://maps.stamen.com].</p>
@@ -23,14 +24,14 @@ library(myMap)
 ## Call
 <p> A new object will be generated as the constructor ic called:</p>
 ```{r}
-myMap = MapStamen$new(left = -125, bottom = 25.75,
-                      right = -67, top = 49,
-                      mapType = "toner-lite", Zoom = 8)
+myMap = MapStamen$new(left = -124.409591, bottom = 32.534156,
+                      right = -114.131211, top = 	42.009518,
+                      mapType = "terrain-background", Zoom = 8)
 ```
 
 <p> This call generates a new object named "myMap" which is actually a map extracted from Stamen API.</p>
 ## Arguments
-<p> A map which is going to be extracted from Stamen should be defined by a box. The lower-left and upper-rigt points coordinates of the box should therefor be passed as the arguments.</p>
+<p> A map which is aimed be extracted from Stamen should be defined by a box. The coordinates of the lower-left and upper-right points of the box should therefor be passed as the arguments.</p>
 * left: Provides the lower-left longtitude of the box.
 * bottom: Provides the lower-left latitude of the box.
 * right: Provides the upper-right longitude.
@@ -53,8 +54,8 @@ myMap$showMap()
 <p> If we set mapType = "terrain":</p>
 
 ```{r}
-myMap = MapStamen$new(left = 86.05, bottom = 27.21,
-                      right = 87.81, top = 28.76,
+myMap = MapStamen$new(left = -124.409591, bottom = 32.534156,
+                      right = -114.131211, top = 	42.009518,
                       mapType = "terrain", Zoom = 8)
 
 myMap$showMap()

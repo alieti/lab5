@@ -8,6 +8,7 @@ Maintainer: Ali Etminan<aliet176@student.liu.se>
 Description: A map is extracted from mapStamen API according to a defind box
     consisting longitudes and latitudes.
 License: GPL-3
+LazyData: true
 Encoding: UTF-8
 Imports: 
     R6,

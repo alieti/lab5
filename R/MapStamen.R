@@ -55,7 +55,7 @@ MapStamen <- R6Class("MapStamen",
                        
                        initialize = function(left = -124.409591, bottom = 32.534156,
                                              right = -114.131211, top = 	42.009518,
-                                             mapType = "terrain", Zoom = 8){
+                                             mapType = "terrain", Zoom = 9){
                          
                          #Returning error and stop executing as the arguments are not the correct type.
                          
@@ -88,9 +88,9 @@ MapStamen <- R6Class("MapStamen",
                          latitude = c(private$.bottom, private$.top)
                          sites = data.frame(Longitude = longitude, Latitude = latitude)
                          
-                         ggmap(private$.myMap, legend = "right") +
+                         ggmap(private$.myMap, extent = "device") +
                            geom_point(data = sites, aes(x = Longitude, y = Latitude),
-                                      size = 2, shape=19)
+                                      size = 1, shape=19)
                          
                        },
                        
@@ -103,28 +103,30 @@ MapStamen <- R6Class("MapStamen",
                          
                        },
                        
-                       #Method to plot AQI data on top of the map
                        ClGoodday = function() {
                          
-                         #Plots good days with green bubbles
-                         ggmap(private$.myMap) +
-                           geom_point(aes(x = longi, y = latit,  colour = GoodDays), data = private$clData(), alpha = 0.75, size = 4) + 
-                           theme(legend.position="bottom")
+                         data("Ca_2019")
+                         
+                         ggmap(private$.myMap, extent = "device") +
+                           geom_point(aes(x = longi, y = latit,  colour = GoodDays), data = Ca_2019, alpha = 0.75, size = 4) + 
+                           theme(legend.position="right")
                          
                        },
                        
                        ClModday = function(){
-                         ggmap(private$.myMap) +
-                           geom_point(aes(x = longi, y = latit,  colour = ModerateDays), data = private$clData(), alpha = 0.75, size = 4) + 
-                           theme(legend.position="bottom")
+                         data("Ca_2019")
+                         ggmap(private$.myMap, extent = "device") +
+                           geom_point(aes(x = longi, y = latit,  colour = ModerateDays), data = Ca_2019, alpha = 0.75, size = 4) + 
+                           theme(legend.position="right")
                          
                          
                        },
                        
                        ClUnhealthyDay = function(){
-                         ggmap(private$.myMap) +
-                           geom_point(aes(x = longi, y = latit,  colour = UnhealthyDays), data = private$clData(), alpha = 0.75, size = 4) + 
-                           theme(legend.position="bottom")
+                         data("Ca_2019")
+                         ggmap(private$.myMap, extent = "device") +
+                           geom_point(aes(x = longi, y = latit,  colour = UnhealthyDays), data = Ca_2019, alpha = 0.75, size = 4) + 
+                           theme(legend.position="right")
                        }
                      ),
                      
@@ -145,29 +147,7 @@ MapStamen <- R6Class("MapStamen",
                                                          crop = TRUE, zoom = private$.zoom)
                          
                          self
-                       },
-                       
-                       clData = function(){
-                         data5 <- read.csv2("aqi2019.csv", sep = ",")
-                         
-                         
-                         gooddays <- as.numeric(data5$Good)
-                         moderatedays <- as.numeric(data5$Moderate)
-                         unhealthy <- data.frame(SomewhatUnhealthy = data5$Unhealthy.for.Sensitive.Groups,
-                                                 Unhealthy = data5$Unhealthy,
-                                                 VeryUnhealthy = data5$Very.Unhealthy,
-                                                 stringsAsFactors = FALSE)
-                         
-                         unhealthy <- sapply(unhealthy, as.numeric)
-                         nothealthy <- rowSums(unhealthy)
-                         latit <- as.numeric(format((data5$latitude)))
-                         longi <-  -1*as.numeric(format((data5$longitude)))
-                         
-                         goodplot <- data.frame(longi = longi, latit = latit,
-                                                GoodDays = gooddays,
-                                                ModerateDays = moderatedays,
-                                                UnhealthyDays = nothealthy)
-                         return(goodplot)
                        }
+                       
                      )
 )
