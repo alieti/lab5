@@ -26,7 +26,7 @@
 #' @section Private Methods:
 #'  \describe{
 #'    \item{\code{getMap()}}{This method dowloads the map from Stamen API and will be implemented in initialize method.}
-#'    \item{\code{clData()}}{This method manipulates the dataset to be implemented in California healthy days methods.}   
+#'       
 #'    }
 #'           
 #' @seealso http://maps.stamen.com

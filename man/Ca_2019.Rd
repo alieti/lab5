@@ -20,6 +20,6 @@ A dataset containingv five variables: longi, latit, GoodDays,
 }
 }
 \references{
-\url{https://en.wikipedia.org/wiki/Graph_(abstract_data_type)}
+\url{https://www.epa.gov/outdoor-air-quality-data/air-quality-index-report}
 }
 \keyword{datasets}

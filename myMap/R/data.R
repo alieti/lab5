@@ -17,5 +17,5 @@
 #' @keywords datasets
 #' @name Ca_2019
 #' @format A data frame consisting 34 observations on 5 variables.
-#' @references \url{https://en.wikipedia.org/wiki/Graph_(abstract_data_type)}
+#' @references \url{https://www.epa.gov/outdoor-air-quality-data/air-quality-index-report}
 NULL
