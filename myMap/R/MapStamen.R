@@ -26,7 +26,7 @@
 #' @section Private Methods:
 #'  \describe{
 #'    \item{\code{getMap()}}{This method dowloads the map from Stamen API and will be implemented in initialize method.}
-#'    \item{\code{clData()}}{This method manipulates the dataset to be implemented in California healthy days methods.}   
+#'    
 #'    }
 #'           
 #' @seealso http://maps.stamen.com
@@ -36,11 +36,11 @@
 #' @examples myMap = MapStamen$new(left = 86.05, bottom = 27.21,
 #'                                right = 87.81, top = 28.76, mapType = "toner-lite", Zoom = 5 )
 #'                                    
-#' @import R6
-#' @importFrom R6 R6Class
+#' @import R6 
 #' @import ggmap
 #' @import ggplot2
-#' @export
+#' @export MapStamen
+#' @exportClass MapStamen
 #'
 MapStamen <- R6Class("MapStamen",
                      public = list(
