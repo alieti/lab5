@@ -36,8 +36,7 @@
 #' @examples myMap = MapStamen$new(left = 86.05, bottom = 27.21,
 #'                                right = 87.81, top = 28.76, mapType = "toner-lite", Zoom = 5 )
 #'                                    
-#' @import R6
-#' @importFrom R6 R6Class
+#' @import R6 
 #' @import ggmap
 #' @import ggplot2
 #' @export

@@ -36,8 +36,7 @@
 #' @examples myMap = MapStamen$new(left = 86.05, bottom = 27.21,
 #'                                right = 87.81, top = 28.76, mapType = "toner-lite", Zoom = 5 )
 #'                                    
-#' @import R6
-#' @importFrom R6 R6Class
+#' @import R6 
 #' @import ggmap
 #' @import ggplot2
 #' @export
@@ -45,7 +44,7 @@
 MapStamen <- R6Class("MapStamen",
                      public = list(
                        
-                        
+                       
                        #' @param left The lowerleft longitude of the area-box to be downloaded.
                        #' @param bottom The lowerleft latitude of the area-box to be downloaded.
                        #' @param right The upperright longitude of the area-box to be downloaded.
@@ -108,15 +107,20 @@ MapStamen <- R6Class("MapStamen",
                          data("Ca_2019")
                          
                          ggmap(private$.myMap, extent = "device") +
-                           geom_point(aes(x = longi, y = latit,  colour = GoodDays), data = Ca_2019, alpha = 0.75, size = 4) + 
+                           geom_point(aes(x = longi, y = latit, size = GoodDays), 
+                                      data = Ca_2019, color = "gray", fill = "Green", stroke = 1, alpha = 0.75, shape = 21) + 
+                           scale_size(range = c(2,18)) +
                            theme(legend.position="right")
                          
                        },
                        
                        ClModday = function(){
                          data("Ca_2019")
+                         
                          ggmap(private$.myMap, extent = "device") +
-                           geom_point(aes(x = longi, y = latit,  colour = ModerateDays), data = Ca_2019, alpha = 0.75, size = 4) + 
+                           geom_point(aes(x = longi, y = latit, size = ModerateDays), 
+                                      data = Ca_2019, color = "gray", fill = "Orange", stroke = 1, alpha = 0.75, shape = 21) + 
+                           scale_size(range = c(2,18)) +
                            theme(legend.position="right")
                          
                          
@@ -124,8 +128,11 @@ MapStamen <- R6Class("MapStamen",
                        
                        ClUnhealthyDay = function(){
                          data("Ca_2019")
+                         
                          ggmap(private$.myMap, extent = "device") +
-                           geom_point(aes(x = longi, y = latit,  colour = UnhealthyDays), data = Ca_2019, alpha = 0.75, size = 4) + 
+                           geom_point(aes(x = longi, y = latit, size = UnhealthyDays), 
+                                      data = Ca_2019, color = "gray", fill = "Red", stroke = 1, alpha = 0.75, shape = 21) + 
+                           scale_size(range = c(2,18)) +
                            theme(legend.position="right")
                        }
                      ),

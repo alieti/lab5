@@ -10,6 +10,8 @@ Description: A map is extracted from mapStamen API according to a defind box
 License: GPL-3
 LazyData: true
 Encoding: UTF-8
+Depends:
+    R (>= 2.10)
 Imports: 
     R6,
     ggmap,
